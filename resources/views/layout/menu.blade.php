@@ -10,6 +10,9 @@
         <li class="nav-item">
           <a class="nav-link" href="{{url('livros/')}}">Livros</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url('emprestimos/')}}">Empréstimos</a>
+        </li>
       </ul>
     </div>
 </nav>
