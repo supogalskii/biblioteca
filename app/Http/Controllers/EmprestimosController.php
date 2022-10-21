@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Emprestimo;
+use App\Models\Contato;
+use App\Models\Livro;
 use Illuminate\Http\Request;
+use Session;
 
 
 class EmprestimosController extends Controller
@@ -38,7 +41,9 @@ class EmprestimosController extends Controller
      */
     public function create()
     {
-        return view('emprestimo.create');
+        $contatos = Contato::all();
+        $livros = Livro::all();
+        return view('emprestimo.create', ['contatos'=>$contatos, 'livros'=>$livros]);
     }
 
     /**
@@ -51,12 +56,12 @@ class EmprestimosController extends Controller
     {
         $this->validate($request,[
             'contato_id' => 'required',
-            'livro_id' => 'required',
+            'livros_id' => 'required',
             'datahora' => 'required'
         ]);
         $emprestimo = new Emprestimo();
         $emprestimo->contato_id = $request->input('contato_id');
-        $emprestimo->livro_id = $request->input('livro_id');
+        $emprestimo->livros_id = $request->input('livros_id');
         $emprestimo->datahora = \Carbon\Carbon::createFromFormat('d/m/Y H:i:s', $request->input('datahora'));
         $emprestimo->obs = $request->input('obs');
         $emprestimo->datadevolucao = null;
@@ -74,7 +79,8 @@ class EmprestimosController extends Controller
      */
     public function show(Emprestimo $emprestimo)
     {
-        //
+        $emprestimos = emprestimo::find($id);
+        return view('emprestimo.show',array('emprestimos' => $emprestimos,'busca'=>null));
     }
 
     /**

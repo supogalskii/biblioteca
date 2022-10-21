@@ -16,11 +16,23 @@
     <br />
     {{Form::open(['route' => 'emprestimos.store', 'method' => 'POST','enctype'=>'multipart/form-data'])}}
         {{Form::label('contato_id', 'Contato')}}
-        {{Form::text('contato_id','',['class'=>'form-control','required','placeholder'=>'Contato'])}}
+        {{Form::text('contato_id','',['class'=>'form-control','required','placeholder'=>'Selecione um Contato', 'list'=>'listcontatos'])}}
+        <datalist id = 'listcontatos'>
+            @foreach($contatos as $contato)
+            <option value="{{$contato->id}}">{{$contato->nome}}
+            </option>
+            @endforeach
+        </datalist>
         {{Form::label('livro_id', 'Livro')}}
-        {{Form::text('livro_id','',['class'=>'form-control','required','placeholder'=>'Livro'])}}
+        {{Form::text('livros_id','',['class'=>'form-control','required','placeholder'=>'Selecione um Livro', 'list'=>'listlivros'])}}
+        <datalist id = 'listlivros'>
+            @foreach($livros as $livro)
+            <option value="{{$livro->id}}">{{$livro->titulo}}
+            </option>
+            @endforeach
+        </datalist>
         {{Form::label('datahora', 'Data')}}
-        {{Form::textarea('datahora',\Carbon\Carbon::now()->format('d/m/Y H:i:s'),['class'=>'form-control','required','placeholder'=>'Data','rows'=>'8'])}}
+        {{Form::textarea('datahora',\Carbon\Carbon::now()->format('d/m/Y H:i:s'),['class'=>'form-control','required','placeholder'=>'Data','rows'=>'1'])}}
         {{Form::label('obs', 'obs')}}
         {{Form::text('obs','',['class'=>'form-control','required','placeholder'=>'Observação'])}}
         <br />
