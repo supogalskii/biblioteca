@@ -32,10 +32,10 @@
             @endforeach
         </datalist>
         {{Form::label('datahora', 'Data')}}
-        {{Form::textarea('datahora',\Carbon\Carbon::now()->format('d/m/Y H:i:s'),['class'=>'form-control','required','placeholder'=>'Data','rows'=>'1'])}}
-        {{Form::label('obs', 'obs')}}
-        {{Form::text('obs','',['class'=>'form-control','required','placeholder'=>'Observação'])}}
-        <br />
+        {{Form::text('datahora',\Carbon\Carbon::now()->format('d/m/Y H:i:s'),['class'=>'form-control','required','placeholder'=>'Data','rows'=>'2'])}}
+        {{Form::label('obs', 'Obs')}}
+        {{Form::textarea('obs','',['class'=>'form-control','placeholder'=>'Observação'])}}
+        <br/>
         {{Form::submit('Salvar',['class'=>'btn btn-success'])}}
         {!!Form::button('Cancelar',['onclick'=>'javascript:history.go(-1)', 'class'=>'btn btn-secondary'])!!}
     {{Form::close()}}

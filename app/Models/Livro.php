@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Livro extends Model
 {
     use HasFactory;
+
+    public function emprestimos(){
+        return $this->hasMany(Emprestimo::class, 'livros_id', 'id');
+    }
 }

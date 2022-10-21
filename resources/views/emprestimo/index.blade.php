@@ -10,7 +10,7 @@
     {{Form::open(['url'=>'emprestimos/buscar','method'=>'GET'])}}
         <div class="row">
             <div class="col-sm-3">
-                <a class="btn btn-success" href="{{url('emprestimos/create')}}">Criar</a>
+                <a class="btn btn-success" href="{{url('emprestimos/create')}}">Novo Empréstimo</a>
             </div>
             <div class="col-sm-9">
                 <div class="input-group ml-5">
@@ -27,8 +27,16 @@
         </div>
     {{Form::close()}}
     <br />
-    <table class="table table-striped">
+    <table class="table table-striped table-hover">
+        <tr>
+                    <td>ID</td>
+                    <td>Contato</td>
+                    <td>Livro</td>
+                    <td>Data</td>
+                    <td>Devolução</td>
+        </tr>
         @foreach ($emprestimos as $emprestimo)
+        
             <tr>
                 <td>
                     <a href="{{url('emprestimos/'.$emprestimo->id)}}">{{$emprestimo->id}}</a>
@@ -40,7 +48,10 @@
                     {{$emprestimo->livros_id}} - {{$emprestimo->livro->titulo}}
                 </td>
                 <td>
-                    {{$emprestimo->datahora}}
+                    {{\Carbon\Carbon::create($emprestimo->datahora)->format('d/m/Y H:i:s')}}
+                </td>
+                <td>
+                    {{!!$emprestimo->devolvido!!}}
                 </td>
             </tr>
         @endforeach

@@ -1,7 +1,7 @@
 @extends('layout.app')
 @section('title','Contato - '.$contato->nome)
 @section('content')
-    <div class="card w-50">
+    <div class="card w-50 m-auto">
         @php
             $nomeimagem = "";
             if(file_exists("./img/contatos/".md5($contato->id).".jpg")) {
@@ -43,4 +43,33 @@
             {{Form::close()}}
         </div>
     </div>
+    <br />
+    <div class="card w-70 m-auto">
+        <div class="card-header">
+            <h1>Empréstimos</h1>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th>Id</th>
+                    <th>Livro</th>
+                    <th>Data</th>
+                    <th>Devolução</th>
+                </tr>
+                @foreach ($contato->emprestimos as $emprestimo)
+                        <tr>
+                            <td>
+                                <a href="{{url('emprestimos/'.$emprestimo->id)}}">{{$emprestimo->id}}</a>
+                            </td>
+                            <td>
+                                {{$emprestimo->livros_id}} - {{$emprestimo->livro->titulo}}
+                            </td>
+                            <td>
+                                {{\Carbon\Carbon::create($emprestimo->datahora)->format('d/m/Y H:i:s')}}
+                            </td>
+                            <td>{!!$emprestimo->devolvido!!}</td>
+                        </tr>
+                    @endforeach
+            </table>
+        </div>
 @endsection
