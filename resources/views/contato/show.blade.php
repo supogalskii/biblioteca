@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.app')
 @section('title','Contato - '.$contato->nome)
 @section('content')
     <div class="card w-50 m-auto">
@@ -33,14 +33,18 @@
                 Estado: {{$contato->estado}}</p>
         </div>
         <div class="card-footer">
+            @auth
             {{Form::open(['route' => ['contatos.destroy',$contato->id],'method' => 'DELETE'])}}
             @if ($nomeimagem !== "./img/contatos/semfoto.webp")
                {{Form::hidden('foto',$nomeimagem)}}
             @endif
             <a href="{{url('contatos/'.$contato->id.'/edit')}}" class="btn btn-success">Alterar</a>
             {{Form::submit('Excluir',['class'=>'btn btn-danger','onclick'=>'return confirm("Confirma exclusão?")'])}}
+            @endauth
             <a href="{{url('contatos/')}}" class="btn btn-secondary">Voltar</a>
+            @auth
             {{Form::close()}}
+            @endauth
         </div>
     </div>
     <br />

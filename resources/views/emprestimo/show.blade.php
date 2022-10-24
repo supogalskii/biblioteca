@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.app')
 @section('title','Empréstimo - '.$emprestimo->id)
 @section('content')
     <div class="card w-50">
@@ -19,9 +19,11 @@
                     </div>
                     <div class="col-4">
                         @if($emprestimo->datadevolucao == null)
+                        @auth
                         {{Form::open(['route'=>['emprestimos.devolver',$emprestimo->id],'method'=>'PUT'])}}
                         {{form::submit('Devolver',['class'=>'btn btn-success','onclick'=>'return confim("Confirma devolução?")'])}}
                         {{Form::close()}}
+                        @endauth
                         @endif
                     </div>
                 </div>
@@ -34,10 +36,15 @@
             <p class="text">obs: {{$emprestimo->obs}}</p>
         </div>
         <div class="card-footer">
+            @auth
             {{Form::open(['route' => ['emprestimos.destroy',$emprestimo->id],'method' => 'DELETE'])}}
             {{Form::submit('Excluir',['class'=>'btn btn-danger','onclick'=>'return confirm("Confirma exclusão?")'])}}
+            @endauth
             <a href="{{url('emprestimos/')}}" class="btn btn-secondary">Voltar</a>
+            @auth
+            
             {{Form::close()}}
+            @endauth
         </div>
     </div>
 @endsection

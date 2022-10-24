@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Contato;
 use Session;
@@ -37,7 +38,12 @@ class ContatosController extends Controller
      */
     public function create()
     {
+        if(Auth::check()){
         return view('contato.create');
+        }
+        else{
+            return redirect('login');
+        }
     }
 
     /**
@@ -48,6 +54,7 @@ class ContatosController extends Controller
      */
     public function store(Request $request)
     {
+        if(Auth::check()){
         $this->validate($request,[
             'nome' => 'required|min:3',
             'email' => 'required|e-mail',
@@ -70,6 +77,9 @@ class ContatosController extends Controller
             }
             return redirect('contatos');
         }
+      }else{
+        return redirect('login');
+      }
     }
 
     /**
@@ -92,8 +102,13 @@ class ContatosController extends Controller
      */
     public function edit($id)
     {
-        $contato = Contato::find($id);
-        return view('contato.edit',array('contato' => $contato));
+        if(Auth::check()){
+            $contato = Contato::find($id);
+            return view('contato.edit',array('contato' => $contato));
+        }else{
+            return redirect('login');
+        }
+       
     }
 
     /**

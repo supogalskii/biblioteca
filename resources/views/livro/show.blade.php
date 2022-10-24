@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.app')
 @section('title','Livro - '.$livro->titulo)
 @section('content')
     <div class="card w-50 m-auto">
@@ -40,7 +40,9 @@
             <a href="{{url('livros/'.$livro->id.'/edit')}}" class="btn btn-success">Alterar</a>
             {{Form::submit('Excluir',['class'=>'btn btn-danger','onclick'=>'return confirm("Confirma exclusão?")'])}}
             <a href="{{url('livros/')}}" class="btn btn-secondary">Voltar</a>
+            @auth
             {{Form::close()}}
+            @endauth
         </div>
     </div><br />
     <div class="card w-70 m-auto">
