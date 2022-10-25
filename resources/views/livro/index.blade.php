@@ -9,11 +9,11 @@
     @endif
     {{Form::open(['url'=>'livros/buscar','method'=>'GET'])}}
         <div class="row">
-            @auth
+             @if((Auth::check())&&(Auth::user()->isAdmin()))
             <div class="col-sm-3">
                 <a class="btn btn-success" href="{{url('livros/create')}}">Criar</a>
             </div>
-            @endauth
+            @endif
             <div class="col-sm-9">
                 <div class="input-group ml-5">
                     @if($busca !== null)

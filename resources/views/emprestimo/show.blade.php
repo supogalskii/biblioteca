@@ -19,11 +19,11 @@
                     </div>
                     <div class="col-4">
                         @if($emprestimo->datadevolucao == null)
-                        @auth
+                         @if((Auth::check())&&(Auth::user()->isAdmin))
                         {{Form::open(['route'=>['emprestimos.devolver',$emprestimo->id],'method'=>'PUT'])}}
                         {{form::submit('Devolver',['class'=>'btn btn-success','onclick'=>'return confim("Confirma devolução?")'])}}
                         {{Form::close()}}
-                        @endauth
+                        @endif
                         @endif
                     </div>
                 </div>
@@ -36,15 +36,15 @@
             <p class="text">obs: {{$emprestimo->obs}}</p>
         </div>
         <div class="card-footer">
-            @auth
+             @if((Auth::check())&&(Auth::user()->isAdmin))
             {{Form::open(['route' => ['emprestimos.destroy',$emprestimo->id],'method' => 'DELETE'])}}
             {{Form::submit('Excluir',['class'=>'btn btn-danger','onclick'=>'return confirm("Confirma exclusão?")'])}}
-            @endauth
+            @endif
             <a href="{{url('emprestimos/')}}" class="btn btn-secondary">Voltar</a>
-            @auth
+             @if((Auth::check())&&(Auth::user()->isAdmin))
             
             {{Form::close()}}
-            @endauth
+            @endif
         </div>
     </div>
 @endsection

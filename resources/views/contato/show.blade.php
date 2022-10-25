@@ -33,18 +33,18 @@
                 Estado: {{$contato->estado}}</p>
         </div>
         <div class="card-footer">
-            @auth
+             @if((Auth::check())&&(Auth::user()->isAdmin))
             {{Form::open(['route' => ['contatos.destroy',$contato->id],'method' => 'DELETE'])}}
             @if ($nomeimagem !== "./img/contatos/semfoto.webp")
                {{Form::hidden('foto',$nomeimagem)}}
             @endif
             <a href="{{url('contatos/'.$contato->id.'/edit')}}" class="btn btn-success">Alterar</a>
             {{Form::submit('Excluir',['class'=>'btn btn-danger','onclick'=>'return confirm("Confirma exclusão?")'])}}
-            @endauth
+            @endif
             <a href="{{url('contatos/')}}" class="btn btn-secondary">Voltar</a>
-            @auth
+             @if((Auth::check())&&(Auth::user()->isAdmin))
             {{Form::close()}}
-            @endauth
+            @endif
         </div>
     </div>
     <br />

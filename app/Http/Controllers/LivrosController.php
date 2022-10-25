@@ -16,12 +16,8 @@ class LivrosController extends Controller
      */
     public function index()
     {
-        if (Auth::check()) {
-            $emprestimos = Emprestimo::simplepaginate(5);
-            return view('emprestimo.index',array('emprestimos' => $emprestimos,'busca'=>null));
-        } else {
-            return redirect('login');
-        }
+        $livros = Livro::simplepaginate(5);
+        return view('livro.index',array('livros' => $livros,'busca'=>null));
     }
 
     /**
@@ -42,7 +38,7 @@ class LivrosController extends Controller
      */
     public function create()
     {
-        if (Auth::check()) {
+        if(((Auth::check())&&(Auth::user()->isAdmin))) {
             return view('livro.create');
         } else {
             return redirect('login');
@@ -57,7 +53,7 @@ class LivrosController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::check()) {
+        if(((Auth::check())&&(Auth::user()->isAdmin))) {
             $this->validate($request,[
                 'titulo' => 'required|min:3',
                 'descricao' => 'required',
@@ -104,7 +100,7 @@ class LivrosController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::check()) {
+        if(((Auth::check())&&(Auth::user()->isAdmin))) {
             $livro = Livro::find($id);
             return view('livro.edit',array('livro' => $livro));
         } else {
@@ -121,7 +117,7 @@ class LivrosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Auth::check()) {
+        if(((Auth::check())&&(Auth::user()->isAdmin))) {
             $this->validate($request,[
                 'titulo' => 'required|min:3',
                 'descricao' => 'required',
@@ -157,7 +153,7 @@ class LivrosController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        if (Auth::check()) {
+        if(((Auth::check())&&(Auth::user()->isAdmin))) {
             $livro = Livro::find($id);
             if (isset($request->foto)) {
             unlink($request->foto);
