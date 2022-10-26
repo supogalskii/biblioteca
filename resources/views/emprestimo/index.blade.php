@@ -9,9 +9,11 @@
     @endif
     {{Form::open(['url'=>'emprestimos/buscar','method'=>'GET'])}}
         <div class="row">
-            <div class="col-sm-3">
-                <a class="btn btn-success" href="{{url('emprestimos/create')}}">Novo Empréstimo</a>
-            </div>
+            @if ((Auth::check()) && (Auth::user()->isAdmin()))
+                    <div class="col-sm-3">
+                        <a class="btn btn-success" href="{{url('emprestimos/create')}}">Novo Empréstimo</a>
+                    </div>
+            @endif
             <div class="col-sm-9">
                 <div class="input-group ml-5">
                     @if($busca !== null)

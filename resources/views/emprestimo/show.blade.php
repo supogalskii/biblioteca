@@ -4,7 +4,7 @@
     <div class="card w-50">
         <div class="card-header">
             <h1>Empréstimo - {{$emprestimo->id}}</h1>
-            @if(Session::has('mensagem'))
+        @if(Session::has('mensagem'))
             <div class="alert alert-info">
                 {{Session::get('mensagem')}} 
             </div>
@@ -19,11 +19,11 @@
                     </div>
                     <div class="col-4">
                         @if($emprestimo->datadevolucao == null)
-                         @if((Auth::check())&&(Auth::user()->isAdmin))
-                        {{Form::open(['route'=>['emprestimos.devolver',$emprestimo->id],'method'=>'PUT'])}}
-                        {{form::submit('Devolver',['class'=>'btn btn-success','onclick'=>'return confim("Confirma devolução?")'])}}
-                        {{Form::close()}}
-                        @endif
+                            @if((Auth::check())&&(Auth::user()->isAdmin()))
+                            {{Form::open(['route'=>['emprestimos.devolver',$emprestimo->id],'method'=>'PUT'])}}
+                            {{form::submit('Devolver',['class'=>'btn btn-success','onclick'=>'return confim("Confirma devolução?")'])}}
+                            {{Form::close()}}
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -36,14 +36,13 @@
             <p class="text">obs: {{$emprestimo->obs}}</p>
         </div>
         <div class="card-footer">
-             @if((Auth::check())&&(Auth::user()->isAdmin))
-            {{Form::open(['route' => ['emprestimos.destroy',$emprestimo->id],'method' => 'DELETE'])}}
-            {{Form::submit('Excluir',['class'=>'btn btn-danger','onclick'=>'return confirm("Confirma exclusão?")'])}}
+             @if((Auth::check())&&(Auth::user()->isAdmin()))
+                    {{Form::open(['route' => ['emprestimos.destroy',$emprestimo->id],'method' => 'DELETE'])}}
+                    {{Form::submit('Excluir',['class'=>'btn btn-danger','onclick'=>'return confirm("Confirma exclusão?")'])}}
             @endif
-            <a href="{{url('emprestimos/')}}" class="btn btn-secondary">Voltar</a>
-             @if((Auth::check())&&(Auth::user()->isAdmin))
-            
-            {{Form::close()}}
+                <a href="{{url('emprestimos/')}}" class="btn btn-secondary">Voltar</a>
+             @if((Auth::check())&&(Auth::user()->isAdmin()))
+                    {{Form::close()}}
             @endif
         </div>
     </div>

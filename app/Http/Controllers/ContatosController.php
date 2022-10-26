@@ -38,7 +38,7 @@ class ContatosController extends Controller
      */
     public function create()
     {
-        if(((Auth::check())&&(Auth::user()->isAdmin))){
+        if ((Auth::check()) && (Auth::user()->isAdmin())){
         return view('contato.create');
         }
         else{
@@ -54,7 +54,7 @@ class ContatosController extends Controller
      */
     public function store(Request $request)
     {
-       if(((Auth::check())&&(Auth::user()->isAdmin))){
+       if ((Auth::check()) && (Auth::user()->isAdmin())){
         $this->validate($request,[
             'nome' => 'required|min:3',
             'email' => 'required|e-mail',
@@ -102,7 +102,7 @@ class ContatosController extends Controller
      */
     public function edit($id)
     {
-       if(((Auth::check())&&(Auth::user()->isAdmin))){
+       if ((Auth::check()) && (Auth::user()->isAdmin())){
             $contato = Contato::find($id);
             return view('contato.edit',array('contato' => $contato));
         }else{
@@ -120,6 +120,7 @@ class ContatosController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if((Auth::check()) &&(Auth::user()->isAdmin())){
         $this->validate($request,[
             'nome' => 'required|min:3',
             'email' => 'required|e-mail|min:3',
@@ -142,6 +143,9 @@ class ContatosController extends Controller
             Session::flash('mensagem','Contato alterado com sucesso');
             return redirect()->back();
         }
+        }else {
+            return redirect('login');
+        }
     }
 
     /**
@@ -153,6 +157,7 @@ class ContatosController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        if((Auth::check()) && (Auth::user()->isAdmin())){
         $contato = Contato::find($id);
         if (isset($request->foto)) {
            unlink($request->foto);
@@ -160,5 +165,8 @@ class ContatosController extends Controller
         $contato->delete();
         Session::flash('mensagem','Contato Excluído com Sucesso Foto:');
         return redirect(url('contatos/'));
+    }else{
+        return redirect('login');
+          }
     }
 }

@@ -29,22 +29,25 @@
                 <h3 class="card-title">ID: {{$livro->id}}</h3>
                 <p class="text">Descrição: {{$livro->descricao}}</p>
                 Autor: {{$livro->autor}}<br/>
-                Aditora: {{$livro->editora}}<br/>
+                Editora: {{$livro->editora}}<br/>
                 Ano: {{$livro->ano}}</p>
         </div>
         <div class="card-footer">
-            {{Form::open(['route' => ['livros.destroy',$livro->id],'method' => 'DELETE'])}}
-            @if ($nomeimagem !== "./img/livros/livrosemfoto.webp")
-               {{Form::hidden('foto',$nomeimagem)}}
+            @if ((Auth::check()) && (Auth::user()->isAdmin()))
+                    {{Form::open(['route' => ['livros.destroy',$livro->id],'method' => 'DELETE'])}}
+                    @if ($nomeimagem !== "./img/livros/livrosemfoto.webp")
+                    {{Form::hidden('foto',$nomeimagem)}}
+                    @endif
+                    <a href="{{url('livros/'.$livro->id.'/edit')}}" class="btn btn-success">Alterar</a>
+                {{Form::submit('Excluir',['class'=>'btn btn-danger','onclick'=>'return confirm("Confirma exclusão?")'])}}
             @endif
-            <a href="{{url('livros/'.$livro->id.'/edit')}}" class="btn btn-success">Alterar</a>
-            {{Form::submit('Excluir',['class'=>'btn btn-danger','onclick'=>'return confirm("Confirma exclusão?")'])}}
-            <a href="{{url('livros/')}}" class="btn btn-secondary">Voltar</a>
-             @if((Auth::check())&&(Auth::user()->isAdmin))
-            {{Form::close()}}
+                    <a href="{{url('livros/')}}" class="btn btn-secondary">Voltar</a>
+             @if((Auth::check())&&(Auth::user()->isAdmin()))
+                    {{Form::close()}}
             @endif
         </div>
-    </div><br />
+    </div>
+    <br />
     <div class="card w-70 m-auto">
         <div class="card-header">
             <h1>Empréstimos</h1>

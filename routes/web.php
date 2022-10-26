@@ -17,11 +17,8 @@ use App\Http\Controllers\EmprestimosController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
-
-
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
+   
 Route::get('contatos/buscar',[ContatosController::class,'buscar']);
 Route::resource('contatos',ContatosController::class);
 
